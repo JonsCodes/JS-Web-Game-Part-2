@@ -1,3 +1,11 @@
+function tile(url, left, bottom, width, height){
+    for(let h = 0; h < height; h++){
+        for(let w = 0; w < width; w++){
+            newImage(url, left + w*100, bottom+h*100)
+        }
+    }
+}
+
 function newImage(url, left, bottom){
     let object = document.createElement('img')
     object.src = url
@@ -10,10 +18,17 @@ function newImage(url, left, bottom){
 
 function newItem(url, left, bottom){
     let item = newImage(url, left, bottom)
+    item.addEventListener('click', function(){
+        item.remove()
+        let inventoryItem = document.createElement('img')
+        inventoryItem.src = url
+        inventory.append(inventoryItem)
+    })
 }
 
+let inventory = document.createElement('div')
+
 function newInventory(){
-    let inventory = document.createElement('div')
     inventory.style.position = 'fixed'
     inventory.style.bottom = '0px';
     inventory.style.left = '0px'
@@ -28,13 +43,20 @@ function newInventory(){
     document.body.append(inventory)
 }
 
+let horizon = window.innerHeight / 1.75
+let heightOfSky = window.innerHeight-horizon
+let heightOfGrass = horizon
+
+tile('assets/sky.png', 0, horizon, window.innerWidth/100, heightOfSky/100)
+tile('assets/grass.png', 0, 0, window.innerWidth/100, heightOfGrass/100)
+
 newInventory()
 newImage('assets/green-character.gif', 100, 250)
 newImage('assets/tree.png', 200, 450)
 newImage('assets/pillar.png', 350, 250)
-newImage('assets/pine-tree.png', 450, 350)
+newImage('assets/pine-tree.png', 750, 350)
 newImage('assets/crate.png', 150, 350)
-newImage('assets/well.png', 500, 575)
+newImage('assets/well.png', 600, 475)
 
 newItem('assets/sword.png', 500, 555)
 newItem('assets/shield.png', 165, 335)
